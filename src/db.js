@@ -1,7 +1,7 @@
 (function ( window , undefined ) {
     'use strict';
-    var indexedDB = window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.oIndexedDB || window.msIndexedDB,
-        IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange,
+    var indexedDB = window ? (window.indexedDB || window.webkitIndexedDB || window.mozIndexedDB || window.oIndexedDB || window.msIndexedDB) : indexedDB,
+        IDBKeyRange = window ? (window.IDBKeyRange || window.webkitIDBKeyRange) : IDBKeyRange,
         transactionModes = {
             readonly: 'readonly',
             readwrite: 'readwrite'
@@ -598,6 +598,9 @@
     } else if ( typeof define === 'function' && define.amd ) {
         define( function() { return db; } );
     } else {
-        window.db = db;
+        if(window)
+            window.db = db;
+        else
+            workerDB = db;
     }
 })( window );
